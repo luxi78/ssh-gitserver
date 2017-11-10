@@ -1,0 +1,16 @@
+#!/bin/bash
+
+#_DIR=`dirname $0`
+_DIR=$(cd "$(dirname "$0")"; pwd) #绝对路径
+_VOLUME_DIR=${_DIR}/volumes
+
+#echo $_VOLUME_DIR
+
+docker run \
+           --restart always \
+           --name ssh-gitserver \
+           -d \
+           -p 29418:22 \
+           -v ${_VOLUME_DIR}/repo_home:/home/git \
+           -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) \
+           luxi78/ssh-gitserver:v0.1
